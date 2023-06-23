@@ -21,11 +21,16 @@ button {
     color: #FDFDFD;
     background-color: #AC485A;
     border: 0;
+    cursor: pointer;
     padding: 15px;
     border-radius: 8px;
     font-size: 20px;
     text-align: center;
     font-family: 'Rubik', sans-serif;
+}
+
+button:hover {
+    background-color: #954251;
 }
 
 .container {
@@ -34,4 +39,8 @@ button {
   
     max-width: 320px;
     margin: 30px auto;
+}
+img {
+    width: 150px;
+    margin: 0 auto;
 }
