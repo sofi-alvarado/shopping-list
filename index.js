@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 const appSettings = {
     databaseURL: "https://shopping-list-27442-default-rtdb.firebaseio.com/"
@@ -15,19 +15,40 @@ const addButton = document.getElementById("add-button");
 const inputField = document.getElementById("input-field");
 const ulEl = document.getElementById("ul-el");
 
+
 addButton.addEventListener("click", function (){
     let inputValue = inputField.value;
     push(shoppingListInDB, inputValue);
-    //inputField.value = "";
     console.log(`${inputValue} added to database`)
-    //console.log(groceryList)
-    //renderList();
+
+    clearInput();
+    //renderList(inputValue);
 })
 
-function renderList() {
-    let listItems = "";
-    for (let i = 0; i < groceryList.length; i++){
-        listItems += "<li>" + groceryList[i] + "</li>"
+/*
+Call the onValue function with
+shoppingListInDB as the first argument and
+function(snapshot) {} as the second argument
+*/
+
+onValue(shoppingListInDB, function(snapshot) {
+    let arrayList = Object.values(snapshot.val());
+    clearList();
+    for (let i = 0; i <arrayList.length; i++) {
+        // Challenge: Use the appendItemToShoppingListEl(itemValue) function inside of the for loop to append item to the shopping list element for each iteration.
+        renderList(arrayList[i])
     }
-    ulEl.innerHTML = listItems;
+})
+
+function renderList(value) {
+    ulEl.innerHTML += `<li> ${value} </li>`;
 }
+
+function clearList() {
+    ulEl.innerHTML = " ";
+}
+
+function clearInput() {
+    inputField.value = "";
+}
+
