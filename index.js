@@ -39,11 +39,9 @@ onValue(shoppingListInDB, function(snapshot) {
             let currentItem = arrayList[i];
             let currentItemID = currentItem[0];
             let currentItemValue = currentItem[1];
-            //console.log(currentItemValue)
             renderList(currentItem);
         }
     } else {
-        //clearList();
         ulEl.innerHTML = "No items here... yet"
     }
     
@@ -57,13 +55,12 @@ function renderList(item) {
 
     let newEl = document.createElement("li");
     newEl.textContent = itemValue;
-
-    newEl.addEventListener ("dblclick", function() {
+    
+    newEl.addEventListener("dblclick", function() {
         let listItemLocation = ref(database, `shoppingList/${itemID}`);
         remove(listItemLocation);
         console.log(itemValue + " deleted")
     });
-
 
     ulEl.append(newEl);
 }
